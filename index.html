@@ -494,7 +494,17 @@
           </div>
         </div>
         <div class="contact-form-wrap reveal-right">
-          <form class="contact-form" id="contactForm">
+          <form class="contact-form" action="https://api.web3forms.com/submit" method="POST" id="contactForm">
+            <!-- Web3Forms Access Key for info.surajsonkarg@gmail.com -->
+            <!-- The real Access Key provided by the User -->
+            <input type="hidden" name="access_key" value="18a5403a-5efb-4e5d-8fb8-48da0645f3cf">
+            
+            <input type="hidden" name="subject" value="New message from Suraj Sonkar Portfolio!">
+            <input type="hidden" name="from_name" value="Portfolio Notification">
+            
+            <!-- Optional: Redirect to a custom success page, or let Web3Forms handle it -->
+            <!-- <input type="hidden" name="redirect" value="https://web3forms.com/success"> -->
+
             <div class="form-row">
               <div class="form-group">
                 <label for="name">Your Name</label>
@@ -507,7 +517,7 @@
             </div>
             <div class="form-group">
               <label for="subject">Subject</label>
-              <input type="text" id="subject" name="subject" placeholder="Project Inquiry" required />
+              <input type="text" id="subject" name="custom_subject" placeholder="Project Inquiry" required />
             </div>
             <div class="form-group">
               <label for="message">Message</label>
@@ -552,6 +562,9 @@
   <script src="https://cdn.jsdelivr.net/npm/tsparticles-slim@2.12.0/tsparticles.slim.min.js"></script>
 
   <script src="script.js"></script>
+
+  <!-- Audio for Navigation Sound -->
+  <audio id="navSound" src="Door-OpenSite.mp3.mp3" preload="auto"></audio>
 </body>
 
 </html>

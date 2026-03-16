@@ -267,21 +267,8 @@ filterBtns.forEach(btn => {
 });
 
 /* ─── CONTACT FORM ─── */
-const contactForm = document.getElementById('contactForm');
-if (contactForm) {
-  contactForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const btn = contactForm.querySelector('button[type="submit"]');
-    const original = btn.innerHTML;
-    btn.innerHTML = '<i class="fas fa-check"></i> Message Sent!';
-    btn.style.background = '#28a745';
-    setTimeout(() => {
-      btn.innerHTML = original;
-      btn.style.background = '';
-      contactForm.reset();
-    }, 3000);
-  });
-}
+// The form now uses standard HTML submission via the action attribute to FormSubmit.co
+// No JavaScript override is needed for the basic submission to work reliably.
 
 /* ─── 3D INTERACTIVE PARTICLES ─── */
 if (typeof tsParticles !== 'undefined') {
@@ -363,4 +350,15 @@ window.addEventListener('load', () => {
     setTimeout(() => el.classList.add('visible'), 200);
   });
   highlightNav();
+});
+
+/* ─── NAVIGATION SOUND EFFECTS ─── */
+document.querySelectorAll('.nav-link, .nav-logo, .back-to-top, #downloadCVBtn, #viewCertBtn, #hireMeBtn, #myWorksBtn, .filter-btn').forEach(link => {
+  link.addEventListener('click', () => {
+    const sound = document.getElementById('navSound');
+    if (sound) {
+      sound.currentTime = 0; // Restart sound if it's already playing
+      sound.play().catch(e => console.log("Audio play blocked by browser:", e));
+    }
+  });
 });
