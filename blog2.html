@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Clean Architecture with BLoC | Suraj Sonkar</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link rel="stylesheet" href="style.css" />
+    <style>
+        .blog-header {
+            padding: 120px 0 60px;
+            background: var(--bg-2);
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .blog-post-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 60px 24px;
+        }
+
+        .blog-post-content h2,
+        .blog-post-content h3 {
+            color: var(--yellow);
+            margin: 40px 0 20px;
+        }
+
+        .blog-post-content p {
+            margin-bottom: 24px;
+            font-size: 1.05rem;
+            color: var(--text);
+            line-height: 1.8;
+        }
+
+        .blog-post-content code {
+            background: var(--bg-card);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-family: var(--font-mono);
+            color: var(--yellow);
+            font-size: 0.9em;
+        }
+
+        .blog-post-content ul {
+            margin: 0 0 24px 24px;
+            color: var(--text);
+        }
+
+        .blog-post-content li {
+            margin-bottom: 12px;
+        }
+
+        .back-btn-container {
+            margin-top: 60px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">SURAJ</a>
+            <a href="index.html#blog" class="btn btn-outline" style="padding: 8px 20px; font-size: 0.85rem;">
+                <i class="fas fa-arrow-left"></i> Back to Portfolio
+            </a>
+        </div>
+    </nav>
+
+    <!-- HEADER -->
+    <header class="blog-header">
+        <div class="container">
+            <div class="section-tag">ARCHITECTURE</div>
+            <h1 class="section-title">Clean Architecture in Flutter with BLoC</h1>
+            <p class="section-sub">A comprehensive guide to structuring large-scale Flutter applications for
+                maintainability.</p>
+            <div style="color: var(--text-muted); font-size: 0.9rem;">
+                <i class="fas fa-calendar-alt"></i> February 22, 2025 &nbsp; • &nbsp; <i class="fas fa-clock"></i> 6 min
+                read
+            </div>
+        </div>
+    </header>
+
+    <!-- CONTENT -->
+    <main class="blog-post-content">
+        <h2>The Need for Clean Architecture</h2>
+        <p>As Flutter projects grow from simple prototypes to complex enterprise applications, the dreaded "spaghetti
+            code" problem often arises. UI components become tightly coupled with business logic, making testing a
+            nightmare and even the smallest changes incredibly fragile and time-consuming. Clean Architecture,
+            introduced by Robert C. Martin (Uncle Bob), provides a robust solution by separating concerns into distinct
+            layers.</p>
+
+        <h2>The Three Core Layers</h2>
+        <p>A typical Clean Architecture implementation in Flutter involves three main layers: Presentation, Domain, and
+            Data.</p>
+
+        <h3>1. Presentation Layer (UI & BLoC)</h3>
+        <p>This is where your widgets live. The Presentation layer is responsible solely for rendering the UI and
+            capturing user interactions. It should contain absolutely zero business logic.</p>
+        <p><strong>BLoC (Business Logic Component):</strong> The BLoC acts as the brain for the Presentation layer. It
+            listens to Events from the UI, executes the required Use Cases from the Domain layer, and emit new States
+            back to the UI. The UI purely reflects the current State emitted by the BLoC.</p>
+
+        <h3>2. Domain Layer (Business Logic)</h3>
+        <p>The Domain layer is the inner core of your application. It represents what your app actually *does*. It
+            should be entirely independent of Flutter, third-party libraries, and even the Dart `dart:ui` package.</p>
+        <ul>
+            <li><strong>Entities:</strong> Plain Dart objects representing the core business concepts (e.g., `User`,
+                `Product`).</li>
+            <li><strong>Use Cases (Interactors):</strong> Classes that define the specific actions the app can perform.
+                Each Use Case orchestrates the logic using Repositories. Example: `LoginUserUseCase`.</li>
+            <li><strong>Repositories (Interfaces):</strong> Abstract classes defining the contract for data access. The
+                Domain layer defines *what* data it needs, not *how* it's fetched.</li>
+        </ul>
+
+        <h3>3. Data Layer (Data Sources & Models)</h3>
+        <p>This layer sits at the outer edge, interacting directly with the outside world (APIs, Local Databases,
+            SharedPreferences).</p>
+        <ul>
+            <li><strong>Models:</strong> Data transfer objects. They are often subclasses of Entities and handle JSON
+                serialization/deserialization.</li>
+            <li><strong>Data Sources:</strong> Classes that actually perform the raw data fetching (e.g.,
+                `RemoteUserDataSource` via HTTP, `LocalUserDataSource` via SQLite).</li>
+            <li><strong>Repositories (Implementations):</strong> Concrete implementations of the Repository interfaces
+                defined in the Domain layer. They decide whether to fetch data from the remote or local data source.
+            </li>
+        </ul>
+
+        <h2>Benefits of this Approach</h2>
+        <p>By enforcing this strict dependency rule (dependencies point inwards towards the Domain), we achieve:</p>
+        <ul>
+            <li><strong>Testability:</strong> The Domain logic is isolated and can be tested effortlessly with simple
+                unit tests. BLoCs can be tested without writing widget tests.</li>
+            <li><strong>Maintainability:</strong> Changes in the UI (e.g., swapping a ListView for a GridView) or Data
+                layer (e.g., switching from Firebase to a custom REST API) do not affect the core business logic.</li>
+            <li><strong>Scalability:</strong> New features can be added in a structured, predictable manner across large
+                teams.</li>
+        </ul>
+
+        <h2>Conclusion</h2>
+        <p>While Clean Architecture introduces upfront boilerplate, the long-term benefits in stability and
+            maintainability for production Flutter apps are immense. When combined with BLoC for state management, it
+            creates an incredibly powerful and testable architecture.</p>
+
+        <div class="back-btn-container">
+            <a href="index.html#blog" class="btn btn-primary">
+                <i class="fas fa-arrow-left"></i> Back to All Blogs
+            </a>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer" style="margin-top: 60px;">
+        <div class="container">
+            <div class="footer-inner">
+                <div class="footer-logo">SURAJ</div>
+                <p class="footer-copy">© 2025 Suraj Sonkar. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>
