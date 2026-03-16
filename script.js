@@ -362,3 +362,74 @@ document.querySelectorAll('.nav-link, .nav-logo, .back-to-top, #downloadCVBtn, #
     }
   });
 });
+
+/* ─── CONTACT FORM FILE UPLOADS ─── */
+const attachmentBtn = document.getElementById('attachmentBtn');
+const fileInput = document.getElementById('fileInput');
+const filePreviewContainer = document.getElementById('filePreviewContainer');
+let selectedFiles = [];
+
+if (attachmentBtn && fileInput) {
+  attachmentBtn.addEventListener('click', () => fileInput.click());
+
+  fileInput.addEventListener('change', (e) => {
+    const files = Array.from(e.target.files);
+    handleFiles(files);
+  });
+}
+
+function handleFiles(files) {
+  files.forEach(file => {
+    // Basic validation: 5MB limit for Web3Forms free plan per file
+    if (file.size > 5 * 1024 * 1024) {
+      alert(`File ${file.name} is too large. Max size is 5MB.`);
+      return;
+    }
+
+    selectedFiles.push(file);
+    const reader = new FileReader();
+
+    reader.onload = (e) => {
+      const previewItem = document.createElement('div');
+      previewItem.className = 'file-preview-item';
+      
+      let previewContent = '';
+      if (file.type.startsWith('image/')) {
+        previewContent = `<img src="${e.target.result}" alt="${file.name}">`;
+      } else if (file.type.startsWith('video/')) {
+        previewContent = `<video src="${e.target.result}"></video><div class="file-icon"><i class="fas fa-video"></i></div>`;
+      } else if (file.type === 'application/pdf') {
+        previewContent = `<div class="file-icon"><i class="fas fa-file-pdf"></i></div><div style="position:absolute; bottom:4px; left:4px; font-size:10px; color:var(--text-muted); overflow:hidden; white-space:nowrap; width:90%;">${file.name}</div>`;
+      } else {
+        previewContent = `<div class="file-icon"><i class="fas fa-file"></i></div>`;
+      }
+
+      previewItem.innerHTML = `
+        ${previewContent}
+        <button type="button" class="remove-file" aria-label="Remove file">
+          <i class="fas fa-times"></i>
+        </button>
+      `;
+
+      const removeBtn = previewItem.querySelector('.remove-file');
+      removeBtn.addEventListener('click', () => {
+        selectedFiles = selectedFiles.filter(f => f !== file);
+        previewItem.remove();
+        updateFileInput();
+      });
+
+      filePreviewContainer.appendChild(previewItem);
+    };
+
+    reader.readAsDataURL(file);
+  });
+  
+  updateFileInput();
+}
+
+function updateFileInput() {
+  // Creating a new DataTransfer object to update the file input's files property
+  const dataTransfer = new DataTransfer();
+  selectedFiles.forEach(file => dataTransfer.items.add(file));
+  fileInput.files = dataTransfer.files;
+}
