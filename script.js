@@ -363,6 +363,115 @@ document.querySelectorAll('.nav-link, .nav-logo, .back-to-top, #downloadCVBtn, #
   });
 });
 
+/* ─── INTRO SOUND LOGIC ─── */
+function playIntroSound() {
+  const introSound = document.getElementById('navSound');
+  if (introSound) {
+    introSound.currentTime = 0;
+    introSound.play().then(() => {
+      console.log("Intro sound played successfully");
+      // Remove listeners once played
+      document.removeEventListener('click', playIntroSound);
+      document.removeEventListener('scroll', playIntroSound);
+      document.removeEventListener('keydown', playIntroSound);
+    }).catch(e => {
+      console.log("Intro sound wait for user interaction:", e);
+    });
+  }
+}
+
+// Add listeners for first interaction
+document.addEventListener('click', playIntroSound, { once: true });
+document.addEventListener('scroll', playIntroSound, { once: true });
+document.addEventListener('keydown', playIntroSound, { once: true });
+
+/* ─── AI CHAT ASSISTANT LOGIC ─── */
+console.log("AI Chat Logic Initializing...");
+const aiChatToggle = document.getElementById('aiChatToggle');
+const aiChatClose = document.getElementById('aiChatClose');
+const aiChatWindow = document.getElementById('aiChatWindow');
+const aiChatForm = document.getElementById('aiChatForm');
+const aiInput = document.getElementById('aiInput');
+const aiMessages = document.getElementById('aiMessages');
+const aiTyping = document.getElementById('aiTyping');
+
+console.log("Elements search:", { aiChatToggle, aiChatWindow });
+
+if (aiChatToggle && aiChatWindow) {
+  console.log("AI Chat Widget Found and Ready.");
+  aiChatToggle.addEventListener('click', () => {
+    console.log("AI Chat Toggle Clicked");
+    aiChatWindow.classList.toggle('open');
+    if (aiChatWindow.classList.contains('open')) {
+      aiInput.focus();
+    }
+  });
+
+  const contactAiBtn = document.getElementById('contactAiBtn');
+  if (contactAiBtn) {
+    contactAiBtn.addEventListener('click', () => {
+      aiChatWindow.classList.add('open');
+      aiInput.focus();
+    });
+  }
+
+  aiChatClose.addEventListener('click', () => {
+    aiChatWindow.classList.remove('open');
+  });
+
+  aiChatForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const message = aiInput.value.trim();
+    if (message) {
+      appendChatMessage('user', message);
+      aiInput.value = '';
+      simulateAIResponse(message);
+    }
+  });
+}
+
+function appendChatMessage(sender, text) {
+  const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  const msgDiv = document.createElement('div');
+  msgDiv.className = `message ${sender}-message`;
+  msgDiv.innerHTML = `
+    <p>${text}</p>
+    <span class="message-time">${time}</span>
+  `;
+  aiMessages.appendChild(msgDiv);
+  aiMessages.scrollTop = aiMessages.scrollHeight;
+}
+
+function simulateAIResponse(userMsg) {
+  const msg = userMsg.toLowerCase();
+  aiTyping.style.display = 'flex';
+  aiMessages.scrollTop = aiMessages.scrollHeight;
+
+  setTimeout(() => {
+    aiTyping.style.display = 'none';
+    let response = "That's a great question! Suraj is very passionate about software development. Would you like to know about his projects or skills?";
+
+    if (msg.includes('hello') || msg.includes('hi')) {
+      response = "Hello! I'm Suraj's AI assistant. How can I help you explore his portfolio today?";
+    } else if (msg.includes('skills')) {
+      response = "Suraj is an expert in Flutter, Dart, Android development, and Firebase. He also has strong experience in UI/UX design and API integration.";
+    } else if (msg.includes('projects')) {
+      response = "Suraj has completed over 70+ projects, including E-commerce apps, Chat applications, and Fitness trackers. You can see them in the Projects section above!";
+    } else if (msg.includes('contact') || msg.includes('email') || msg.includes('phone')) {
+      response = "You can contact Suraj via email at info.surajsonkarg@gmail.com or call him at +91-9406289007. He's also active on LinkedIn and WhatsApp!";
+    } else if (msg.includes('resume') || msg.includes('cv')) {
+      response = "You can download Suraj's resume from the 'About' section by clicking the 'Download CV' button.";
+    } else if (msg.includes('time')) {
+        const currentTime = new Date().toLocaleTimeString();
+        response = `The current time is ${currentTime}. I'm live and ready to help!`;
+    } else if (msg.includes('who are you') || msg.includes('robot')) {
+      response = "I am an advanced AI Scout designed to help visitors understand Suraj's expertise and work. I'm powered by modern AI logic!";
+    }
+
+    appendChatMessage('bot', response);
+  }, 1000 + Math.random() * 1000);
+}
+
 /* ─── CONTACT FORM FILE UPLOADS ─── */
 const attachmentBtn = document.getElementById('attachmentBtn');
 const fileInput = document.getElementById('fileInput');
@@ -383,6 +492,12 @@ function handleFiles(files) {
     // Basic validation: 5MB limit for Web3Forms free plan per file
     if (file.size > 5 * 1024 * 1024) {
       alert(`File ${file.name} is too large. Max size is 5MB.`);
+      return;
+    }
+
+    // PDF files are allowed now
+    if (!['image/', 'video/', 'application/pdf'].some(type => file.type.startsWith(type) || file.type === type)) {
+      alert(`File type ${file.type} is not supported.`);
       return;
     }
 
@@ -413,22 +528,26 @@ function handleFiles(files) {
 
       const removeBtn = previewItem.querySelector('.remove-file');
       removeBtn.addEventListener('click', () => {
+        selectedFiles = selectedFiles.splice(selectedFiles.indexOf(file), 1);
         selectedFiles = selectedFiles.filter(f => f !== file);
         previewItem.remove();
         updateFileInput();
       });
 
       filePreviewContainer.appendChild(previewItem);
+      updateFileInput();
     };
 
-    reader.readAsDataURL(file);
+    if (file.type.startsWith('image/') || file.type.startsWith('video/')) {
+      reader.readAsDataURL(file);
+    } else {
+      // For PDFs or other files, we don't need data URL for the icon
+      reader.onload({ target: { result: '' } });
+    }
   });
-  
-  updateFileInput();
 }
 
 function updateFileInput() {
-  // Creating a new DataTransfer object to update the file input's files property
   const dataTransfer = new DataTransfer();
   selectedFiles.forEach(file => dataTransfer.items.add(file));
   fileInput.files = dataTransfer.files;
