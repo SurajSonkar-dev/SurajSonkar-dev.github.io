@@ -68,6 +68,36 @@ function nameTypeEffect() {
 }
 nameTypeEffect();
 
+/* ─── ABOUT ME TYPING ANIMATION ─── */
+let aboutCharIdx = 0;
+let aboutDeleting = false;
+const aboutStr = "I am a passionate Flutter Developer, skilled in creating modern Android applications with clean design, smooth navigation, and engaging UI/UX. As a fresher, I bring creativity, dedication, and strong problem‑solving skills to deliver impactful digital solutions. My goal is to grow as a confident professional while contributing innovative ideas to every project.";
+const aboutTypingEl = document.getElementById('aboutTypingText');
+
+function aboutTypeEffect() {
+  if (!aboutTypingEl) return;
+
+  if (!aboutDeleting) {
+    aboutTypingEl.textContent = aboutStr.slice(0, ++aboutCharIdx);
+    if (aboutCharIdx === aboutStr.length) {
+      aboutDeleting = true;
+      setTimeout(aboutTypeEffect, 5000); // Wait longer on the full text
+      return;
+    }
+  } else {
+    aboutTypingEl.textContent = aboutStr.slice(0, --aboutCharIdx);
+    if (aboutCharIdx === 0) {
+      aboutDeleting = false;
+      setTimeout(aboutTypeEffect, 1000); // Pause before re-typing
+      return;
+    }
+  }
+  // Speed it up slightly since it's a long paragraph
+  setTimeout(aboutTypeEffect, aboutDeleting ? 20 : 40); 
+}
+aboutTypeEffect();
+
+
 /* ─── NAVBAR SCROLL BEHAVIOUR ─── */
 const navbar = document.getElementById('navbar');
 const backToTop = document.getElementById('backToTop');

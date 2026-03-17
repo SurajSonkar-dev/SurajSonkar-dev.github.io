@@ -657,6 +657,7 @@ body {
   color: var(--text-muted);
   margin-bottom: 32px;
   font-size: .95rem;
+  min-height: 100px; /* Prevent layout jump during typing */
 }
 
 .about-buttons {
