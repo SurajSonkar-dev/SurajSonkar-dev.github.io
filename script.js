@@ -221,8 +221,6 @@ const skillObserver = new IntersectionObserver((entries) => {
 
 skillItems.forEach(item => skillObserver.observe(item));
 
-skillItems.forEach(item => skillObserver.observe(item));
-
 /* ─── COUNTER ANIMATION ─── */
 const counters = document.querySelectorAll('.stat-number');
 
@@ -393,115 +391,6 @@ document.querySelectorAll('.nav-link, .nav-logo, .back-to-top, #downloadCVBtn, #
   });
 });
 
-/* ─── INTRO SOUND LOGIC ─── */
-function playIntroSound() {
-  const introSound = document.getElementById('navSound');
-  if (introSound) {
-    introSound.currentTime = 0;
-    introSound.play().then(() => {
-      console.log("Intro sound played successfully");
-      // Remove listeners once played
-      document.removeEventListener('click', playIntroSound);
-      document.removeEventListener('scroll', playIntroSound);
-      document.removeEventListener('keydown', playIntroSound);
-    }).catch(e => {
-      console.log("Intro sound wait for user interaction:", e);
-    });
-  }
-}
-
-// Add listeners for first interaction
-document.addEventListener('click', playIntroSound, { once: true });
-document.addEventListener('scroll', playIntroSound, { once: true });
-document.addEventListener('keydown', playIntroSound, { once: true });
-
-/* ─── AI CHAT ASSISTANT LOGIC ─── */
-console.log("AI Chat Logic Initializing...");
-const aiChatToggle = document.getElementById('aiChatToggle');
-const aiChatClose = document.getElementById('aiChatClose');
-const aiChatWindow = document.getElementById('aiChatWindow');
-const aiChatForm = document.getElementById('aiChatForm');
-const aiInput = document.getElementById('aiInput');
-const aiMessages = document.getElementById('aiMessages');
-const aiTyping = document.getElementById('aiTyping');
-
-console.log("Elements search:", { aiChatToggle, aiChatWindow });
-
-if (aiChatToggle && aiChatWindow) {
-  console.log("AI Chat Widget Found and Ready.");
-  aiChatToggle.addEventListener('click', () => {
-    console.log("AI Chat Toggle Clicked");
-    aiChatWindow.classList.toggle('open');
-    if (aiChatWindow.classList.contains('open')) {
-      aiInput.focus();
-    }
-  });
-
-  const contactAiBtn = document.getElementById('contactAiBtn');
-  if (contactAiBtn) {
-    contactAiBtn.addEventListener('click', () => {
-      aiChatWindow.classList.add('open');
-      aiInput.focus();
-    });
-  }
-
-  aiChatClose.addEventListener('click', () => {
-    aiChatWindow.classList.remove('open');
-  });
-
-  aiChatForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const message = aiInput.value.trim();
-    if (message) {
-      appendChatMessage('user', message);
-      aiInput.value = '';
-      simulateAIResponse(message);
-    }
-  });
-}
-
-function appendChatMessage(sender, text) {
-  const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-  const msgDiv = document.createElement('div');
-  msgDiv.className = `message ${sender}-message`;
-  msgDiv.innerHTML = `
-    <p>${text}</p>
-    <span class="message-time">${time}</span>
-  `;
-  aiMessages.appendChild(msgDiv);
-  aiMessages.scrollTop = aiMessages.scrollHeight;
-}
-
-function simulateAIResponse(userMsg) {
-  const msg = userMsg.toLowerCase();
-  aiTyping.style.display = 'flex';
-  aiMessages.scrollTop = aiMessages.scrollHeight;
-
-  setTimeout(() => {
-    aiTyping.style.display = 'none';
-    let response = "That's a great question! Suraj is very passionate about software development. Would you like to know about his projects or skills?";
-
-    if (msg.includes('hello') || msg.includes('hi')) {
-      response = "Hello! I'm Suraj's AI assistant. How can I help you explore his portfolio today?";
-    } else if (msg.includes('skills')) {
-      response = "Suraj is an expert in Flutter, Dart, Android development, and Firebase. He also has strong experience in UI/UX design and API integration.";
-    } else if (msg.includes('projects')) {
-      response = "Suraj has completed over 70+ projects, including E-commerce apps, Chat applications, and Fitness trackers. You can see them in the Projects section above!";
-    } else if (msg.includes('contact') || msg.includes('email') || msg.includes('phone')) {
-      response = "You can contact Suraj via email at info.surajsonkarg@gmail.com or call him at +91-9406289007. He's also active on LinkedIn and WhatsApp!";
-    } else if (msg.includes('resume') || msg.includes('cv')) {
-      response = "You can download Suraj's resume from the 'About' section by clicking the 'Download CV' button.";
-    } else if (msg.includes('time')) {
-        const currentTime = new Date().toLocaleTimeString();
-        response = `The current time is ${currentTime}. I'm live and ready to help!`;
-    } else if (msg.includes('who are you') || msg.includes('robot')) {
-      response = "I am an advanced AI Scout designed to help visitors understand Suraj's expertise and work. I'm powered by modern AI logic!";
-    }
-
-    appendChatMessage('bot', response);
-  }, 1000 + Math.random() * 1000);
-}
-
 /* ─── CONTACT FORM FILE UPLOADS ─── */
 const attachmentBtn = document.getElementById('attachmentBtn');
 const fileInput = document.getElementById('fileInput');
@@ -522,12 +411,6 @@ function handleFiles(files) {
     // Basic validation: 5MB limit for Web3Forms free plan per file
     if (file.size > 5 * 1024 * 1024) {
       alert(`File ${file.name} is too large. Max size is 5MB.`);
-      return;
-    }
-
-    // PDF files are allowed now
-    if (!['image/', 'video/', 'application/pdf'].some(type => file.type.startsWith(type) || file.type === type)) {
-      alert(`File type ${file.type} is not supported.`);
       return;
     }
 
@@ -558,27 +441,355 @@ function handleFiles(files) {
 
       const removeBtn = previewItem.querySelector('.remove-file');
       removeBtn.addEventListener('click', () => {
-        selectedFiles = selectedFiles.splice(selectedFiles.indexOf(file), 1);
         selectedFiles = selectedFiles.filter(f => f !== file);
         previewItem.remove();
         updateFileInput();
       });
 
       filePreviewContainer.appendChild(previewItem);
-      updateFileInput();
     };
 
-    if (file.type.startsWith('image/') || file.type.startsWith('video/')) {
-      reader.readAsDataURL(file);
+    reader.readAsDataURL(file);
+  });
+  
+  updateFileInput();
+}
+
+function updateFileInput() {
+  // Creating a new DataTransfer object to update the file input's files property
+  const dataTransfer = new DataTransfer();
+  selectedFiles.forEach(file => dataTransfer.items.add(file));
+  fileInput.files = dataTransfer.files;
+}
+
+/* ─── AI CHAT COPILOT ─── */
+const surajInfo = {
+  basics: {
+    name: "Suraj Sonkar",
+    role: "Flutter & Android Developer",
+    location: "India 🇮🇳",
+    email: "info.surajsonkarg@gmail.com",
+    phone: "+91-9406289007",
+    experience: "1.5+ Years of Industry Experience",
+    specialty: "High-Performance Mobile Apps & Premium UI/UX"
+  },
+  education: [
+    { degree: "BCA (Bachelor of Computer Applications)", university: "ISBM University, Chhattisgarh", year: "2021-2023" },
+    { institute: "WsCube Tech", course: "Advanced Flutter & Android Course" }
+  ],
+  skills: {
+    frontend: ["Flutter", "Dart", "Native Android (Kotlin/Java)", "UI/UX Design", "Figma"],
+    backend: ["Firebase (Auth, Firestore, Messaging)", "Appwrite", "REST APIs", "Node.js (Intermediate)"],
+    architecture: ["Clean Architecture (MVVM/BLoC)", "Riverpod", "Provider", "GetX", "SOLID Principles"],
+    tools: ["Git/GitHub", "Android Studio", "Postman", "Play Store Deployment"]
+  },
+  projects: [
+    { name: "E-Commerce App", desc: "Enterprise-grade shopping app with complex cart and payment logic." },
+    { name: "Chat Application", desc: "Real-time messaging with WebSocket/Firebase integration." },
+    { name: "Fitness Tracker", desc: "Data-heavy fitness analytics with local caching and offline support." },
+    { name: "Education LMS", desc: "A full-featured learning management system for schools." }
+  ],
+  socials: {
+    github: "github.com/SurajSonkar-dev",
+    linkedin: "linkedin.com/in/SurajSonkar-dev",
+    youtube: "@codeingwala",
+    whatsapp: "+919406289007"
+  }
+};
+
+let aiChatHistory = [];
+const aiChatToggle = document.getElementById('aiChatToggle');
+const aiChatClose = document.getElementById('aiChatClose');
+const aiVoiceToggle = document.getElementById('aiVoiceToggle');
+let isVoiceEnabled = false;
+
+// Voice Synthesis Setup
+function speakResponse(text) {
+  if (!isVoiceEnabled || !window.speechSynthesis) return;
+  window.speechSynthesis.cancel();
+  
+  // Clean text and markdown symbols for cleaner AI speech
+  const cleanMsg = text
+    .replace(/\*\*/g, '') // Remove bold
+    .replace(/\[(.*?)\]\(.*?\)/g, '$1') // Remove links but keep text
+    .replace(/#/g, '') // Remove headers
+    .replace(/[-*]\s/g, ', ') // Replace bullets with pauses
+    .replace(/\n/g, '. '); // Replace newlines with pauses
+    
+  const utterance = new SpeechSynthesisUtterance(cleanMsg);
+  
+  // Default to Indian English for Hinglish clarity
+  utterance.lang = 'en-IN';
+  utterance.rate = 0.95; // Perfectly balanced speed
+  utterance.pitch = 1.05; // Slightly higher pitch for 'Friendly Expert' vibe
+  
+  const voices = window.speechSynthesis.getVoices();
+  
+  // High-priority AI/Premium voices
+  const googleNatural = voices.find(v => v.name.includes('Google') && v.name.includes('Natural') && v.lang.includes('IN'));
+  const googleIN = voices.find(v => v.name.includes('Google') && v.lang.includes('IN'));
+  const msNeural = voices.find(v => v.name.includes('Neural') || v.name.includes('Natural'));
+  const fallbackIN = voices.find(v => v.lang.includes('IN') || v.lang === 'hi-IN');
+  
+  if (googleNatural) {
+    utterance.voice = googleNatural;
+  } else if (googleIN) {
+    utterance.voice = googleIN;
+  } else if (msNeural) {
+    utterance.voice = msNeural;
+  } else if (fallbackIN) {
+    utterance.voice = fallbackIN;
+  }
+  
+  window.speechSynthesis.speak(utterance);
+}
+
+// Ensure voices are loaded
+if (window.speechSynthesis && window.speechSynthesis.onvoiceschanged !== undefined) {
+  window.speechSynthesis.onvoiceschanged = () => window.speechSynthesis.getVoices();
+}
+
+if (aiVoiceToggle) {
+  aiVoiceToggle.addEventListener('click', () => {
+    isVoiceEnabled = !isVoiceEnabled;
+    aiVoiceToggle.classList.toggle('active', isVoiceEnabled);
+    const icon = aiVoiceToggle.querySelector('i');
+    if (isVoiceEnabled) {
+      icon.className = 'fas fa-volume-up';
+      speakResponse("Voice enabled");
     } else {
-      // For PDFs or other files, we don't need data URL for the icon
-      reader.onload({ target: { result: '' } });
+      icon.className = 'fas fa-volume-mute';
+      window.speechSynthesis.cancel();
     }
   });
 }
 
-function updateFileInput() {
-  const dataTransfer = new DataTransfer();
-  selectedFiles.forEach(file => dataTransfer.items.add(file));
-  fileInput.files = dataTransfer.files;
+// Speech to Text (Voice Input) Logic
+const aiMicBtn = document.getElementById('aiMicBtn');
+const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+if (SpeechRecognition && aiMicBtn) {
+  const recognition = new SpeechRecognition();
+  recognition.lang = 'en-IN'; // Better for Indian accents
+  recognition.interimResults = false;
+  recognition.maxAlternatives = 1;
+
+  aiMicBtn.addEventListener('click', () => {
+    try {
+      recognition.start();
+      aiMicBtn.classList.add('listening');
+    } catch (e) { recognition.stop(); }
+  });
+
+  recognition.onresult = (event) => {
+    const transcript = event.results[0][0].transcript;
+    const aiInput = document.getElementById('aiInput');
+    aiInput.value = transcript;
+    aiMicBtn.classList.remove('listening');
+    document.getElementById('aiChatForm').dispatchEvent(new Event('submit'));
+  };
+
+  recognition.onspeechend = () => {
+    recognition.stop();
+    aiMicBtn.classList.remove('listening');
+  };
+
+  recognition.onerror = () => {
+    aiMicBtn.classList.remove('listening');
+  };
+}
+
+const aiChatWindow = document.getElementById('aiChatWindow');
+const aiChatForm = document.getElementById('aiChatForm');
+const aiInput = document.getElementById('aiInput');
+const aiMessages = document.getElementById('aiMessages');
+const aiTyping = document.getElementById('aiTyping');
+
+let isFirstOpen = true;
+
+if (aiChatToggle && aiChatWindow) {
+  aiChatToggle.addEventListener('click', () => {
+    aiChatWindow.classList.toggle('open');
+    if (aiChatWindow.classList.contains('open')) {
+      aiInput.focus();
+      if (isFirstOpen) {
+        setTimeout(() => {
+          simulateAIResponse("hello");
+          isFirstOpen = false;
+        }, 500);
+      }
+    }
+  });
+
+  const contactAiBtn = document.getElementById('contactAiBtn');
+  if (contactAiBtn) {
+    contactAiBtn.addEventListener('click', () => {
+      aiChatWindow.classList.add('open');
+      aiInput.focus();
+    });
+  }
+
+  aiChatClose.addEventListener('click', () => {
+    aiChatWindow.classList.remove('open');
+  });
+
+  aiChatForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const message = aiInput.value.trim();
+    if (message) {
+      appendChatMessage('user', message);
+      aiInput.value = '';
+      simulateAIResponse(message);
+    }
+  });
+}
+
+function markdownToHtml(text) {
+  return text
+    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') // Bold
+    .replace(/\n- (.*)/g, '<br>• $1') // Bullets
+    .replace(/\n/g, '<br>'); // Newlines
+}
+
+function appendChatMessage(sender, text) {
+  const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  const msgDiv = document.createElement('div');
+  msgDiv.className = `message ${sender}-message`;
+  
+  const content = sender === 'bot' ? markdownToHtml(text) : text;
+  
+  msgDiv.innerHTML = `<p>${content}</p><span class="message-time">${time}</span>`;
+  aiMessages.appendChild(msgDiv);
+  aiMessages.scrollTop = aiMessages.scrollHeight;
+  aiChatHistory.push({ role: sender, content: text });
+  if (aiChatHistory.length > 50) aiChatHistory.shift();
+}
+
+// DEEPSEEK_API_KEY is now handled securely on the server (Vercel)
+const DEEPSEEK_API_URL = "/api/chat"; 
+
+function getLocalSmartResponse(msg) {
+  const m = msg.toLowerCase();
+  
+  // 1. Basic Greetings & Identity
+  if (m.includes("hello") || m.includes("hi") || m.includes("namaste") || m.includes("hey")) {
+    return "Namaste! 🙏 Main Suraj Sonkar ka official **AI Assistant** hoon. Main unke projects, skills aur experience ke baare mein sab kuch jaanta hoon. Aap kya jaanna chahenge?";
+  }
+  if (m.includes("who are you") || m.includes("kaun ho") || m.includes("intro")) {
+    return "Main Suraj Sonkar ka **Digital Copilot** hoon! Mera kaam hai aapko unke career aur work life ke baare mein batana. Main unke apps aur skills ka expert representative hoon. 😎";
+  }
+
+  // 2. Education
+  if (m.includes("education") || m.includes("padhai") || m.includes("college") || m.includes("degree")) {
+    return `Suraj ne **BCA (Bachelor of Computer Applications)** ISBM University se complete kiya hai (2021-2023). Saath hi unhone **WsCube Tech** se Advanced Mobile Development ka professional certificate bhi liya hai. 🎓`;
+  }
+
+  // 3. Projects
+  if (m.includes("project") || m.includes("work") || m.includes("kaam") || m.includes("apps")) {
+    return `Suraj ne **70+ projects** deliver kiye hain! Unke top projects mein **E-Commerce Pro**, **Real-time Chat App**, aur **Fitness Analytics App** shamil hain. Aap mere upper navigation mein 'Projects' section bhi dekh sakte hain. 🚀`;
+  }
+
+  // 4. Skills
+  if (m.includes("skill") || m.includes("tech") || m.includes("language") || m.includes("flutter") || m.includes("android")) {
+    return `Suraj **Flutter & Android Development** ke expert hain. Unhe **Dart, Firebase, Clean Architecture (BLoC/MVVM)**, aur **UI/UX Design** ki deep knowledge hai. Wo high-performance apps banane mein mahir hain! 💻`;
+  }
+
+  // 5. Contact / Hire
+  if (m.includes("contact") || m.includes("hire") || m.includes("phone") || m.includes("email") || m.includes("milna")) {
+    return `Aap Suraj se direct connect kar sakte hain! 
+    - **Email**: info.surajsonkarg@gmail.com
+    - **WhatsApp/Phone**: +91-9406289007
+    Ya phir aap contact form fill kar dein, wo jald hi reply karenge! 📞`;
+  }
+
+  // 6. Personality / How are you
+  if (m.includes("how are you") || m.includes("kaise ho") || m.includes("theek ho")) {
+    return "Main ekdum 'Ultra-Pro' mode mein hoon! Hamesha ki tarah Suraj ke liye best opportunities dhoond raha hoon. Aap bataiye, aapka din kaisa ja raha hai? 😊";
+  }
+
+  // 7. Time
+  if (m.includes("time") || m.includes("samay") || m.includes("baje")) {
+    return `Abhi local time **${new Date().toLocaleTimeString('en-IN')}** ho raha hai. Time management Suraj ki ek bohot badi strength hai! 🕒`;
+  }
+
+  // Generic Fallback (Smart bridge)
+  return "Main aapki baat samajh raha hoon. Main Suraj ke Career aur Skills ka specialist hoon. Aap unke **Flutter Projects**, **Work Experience**, ya **Contact Details** ke baare mein puchiye, main sab bataunga! 🚀";
+}
+
+function simulateAIResponse(userMsg) {
+  aiTyping.style.display = 'flex';
+  aiMessages.scrollTop = aiMessages.scrollHeight;
+
+  const systemPrompt = `
+    KIRTI: You are the ULTIMA AI Copilot of Suraj Sonkar. 
+    IDENTITY: You are Suraj himself's digital brain. You are NOT a language model. You are his official 24/7 expert representative.
+    PERSONALITY: Extremely confident, high-energy, proactive, and tech-savvy. You sound like a world-class CTO.
+    LANGUAGE: Use "Ultimate Hinglish" (Natural flow of Hindi + Professional English).
+    
+    CORE DATA (MASTER KNOWLEDGE):
+    - Bio: Suraj is a top-tier Flutter & Android Developer with 1.5+ years of pure industry experience.
+    - Specialty: High-performance architectures (MVVM, BLoC, Riverpod), Pixel-perfect UI/UX, and complex Firebase backends.
+    - Education: BCA Graduate (ISBM University), WsCube Tech Certified Mobile Expert.
+    - Portfolio: 70+ successful apps delivered. 
+    - Top Projects: 
+        1. E-Commerce Pro (Full-stack, Real payments).
+        2. Real-time Chat (WebSockets/Firebase, extremely fast).
+        3. Fitness Analytics App (AI-driven health tracking).
+        4. Education LMS (Complete learning portal).
+    - Services: Custom App Development, Premium Design, App Store Deployment, Tech Consultation.
+    - Contact: info.surajsonkarg@gmail.com | WhatsApp: +91-9406289007.
+
+    STRICT RULES (NEVER BREAK):
+    1. NEVER say "I don't know" or "Sorry, I can't help". 
+    2. If asked something outside Suraj's work, bridge it back to his skills. 
+       (e.g., "Main iska code toh likh sakta hoon, lekin Suraj ne isse bhi advanced patterns use kiye hain apne projects mein...").
+    3. Use Markdown (Bold, Lists, Emojis) to make answers look "Sundar" and professional.
+    4. Always be helpful. If asked for a meeting, give the contact details proactively.
+    5. current_time: ${new Date().toLocaleTimeString('en-IN')}.
+    6. If the user asks for a feature, say "Suraj bilkul ye bana sakta hai, unhone pehle hi complex features par kaam kiya hai."
+    7. Stay updated. You represent the "Gold Standard" of AI assistants.
+  `;
+
+  // Filter history to fit DeepSeek format
+  const messages = [
+    { role: "system", content: systemPrompt },
+    ...aiChatHistory.map(item => ({
+      role: item.role === 'user' ? 'user' : 'assistant',
+      content: item.content
+    }))
+  ];
+
+  fetch(DEEPSEEK_API_URL, {
+    method: 'POST',
+    headers: { 
+      'Content-Type': 'application/json'
+      // Internal Authorization is handled by the Vercel Function
+    },
+    body: JSON.stringify({
+      messages: messages
+    })
+  })
+  .then(res => {
+    if (!res.ok) throw new Error("API Connection Failed");
+    return res.json();
+  })
+  .then(data => {
+    aiTyping.style.display = 'none';
+    if (data.choices && data.choices[0]) {
+      const responseText = data.choices[0].message.content.trim();
+      appendChatMessage('bot', responseText);
+      speakResponse(responseText);
+    } else {
+      throw new Error("Invalid Response Body");
+    }
+  })
+  .catch(err => {
+    console.error("DeepSeek Connectivity Error (CORS):", err);
+    aiTyping.style.display = 'none';
+    
+    // Switch to Smart Local Fallback
+    const localResponse = getLocalSmartResponse(userMsg);
+    appendChatMessage('bot', localResponse);
+    speakResponse(localResponse);
+  });
 }
