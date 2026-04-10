@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Firebase vs Supabase for Flutter Apps | Suraj Sonkar</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg?v=8" />
+    <link rel="icon" type="image/png" href="favicon-96x96.png?v=8" sizes="96x96" />
+    <link rel="shortcut icon" href="favicon.ico?v=8" />
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=8" />
+    <meta name="theme-color" content="#0a0a0a" />
+    <link rel="manifest" href="site.webmanifest" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link rel="stylesheet" href="style.css" />
+    <style>
+        .blog-header {
+            padding: 120px 0 60px;
+            background: var(--bg-2);
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .blog-post-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 60px 24px;
+        }
+
+        .blog-post-content h2,
+        .blog-post-content h3 {
+            color: var(--yellow);
+            margin: 40px 0 20px;
+        }
+
+        .blog-post-content p {
+            margin-bottom: 24px;
+            font-size: 1.05rem;
+            color: var(--text);
+            line-height: 1.8;
+        }
+
+        .blog-post-content code {
+            background: var(--bg-card);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-family: var(--font-mono);
+            color: var(--yellow);
+            font-size: 0.9em;
+        }
+
+        .blog-post-content ul {
+            margin: 0 0 24px 24px;
+            color: var(--text);
+        }
+
+        .blog-post-content li {
+            margin-bottom: 12px;
+        }
+
+        .blog-post-content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+        }
+
+        .blog-post-content th,
+        .blog-post-content td {
+            border: 1px solid var(--border);
+            padding: 12px;
+            text-align: left;
+        }
+
+        .blog-post-content th {
+            background: var(--bg-card);
+            color: var(--yellow);
+        }
+
+        .back-btn-container {
+            margin-top: 60px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">SURAJ</a>
+            <a href="index.html#blog" class="btn btn-outline" style="padding: 8px 20px; font-size: 0.85rem;">
+                <i class="fas fa-arrow-left"></i> Back to Portfolio
+            </a>
+        </div>
+    </nav>
+
+    <!-- HEADER -->
+    <header class="blog-header">
+        <div class="container">
+            <div class="section-tag">BACKEND</div>
+            <h1 class="section-title">Firebase vs Supabase for Flutter Apps</h1>
+            <p class="section-sub">A detailed comparison to help you choose the right Backend-as-a-Service for your next
+                project.</p>
+            <div style="color: var(--text-muted); font-size: 0.9rem;">
+                <i class="fas fa-calendar-alt"></i> January 15, 2025 &nbsp; • &nbsp; <i class="fas fa-clock"></i> 5 min
+                read
+            </div>
+        </div>
+    </header>
+
+    <!-- CONTENT -->
+    <main class="blog-post-content">
+        <h2>The Backend Dilemma</h2>
+        <p>Choosing a backend for your Flutter application is one of the most critical decisions you'll make in the
+            early stages of a project. For years, Google's Firebase has been the undisputed king of Backend-as-a-Service
+            (BaaS) platforms, tightly integrated into the Flutter ecosystem. However, an open-source alternative,
+            Supabase, has rapidly gained traction. Let's break down the key differences.</p>
+
+        <h2>1. The Database: NoSQL vs Relational SQL</h2>
+        <p>The most fundamental difference lies in their core database offerings.</p>
+        <p><strong>Firebase (Firestore/Realtime DB):</strong> Uses a NoSQL document-based structure. It's incredibly
+            fast for simple reads/writes, scales effortlessly, and is flexible for unstructured data. However, querying
+            complex relationships (like "Get all users who bought product X in category Y last month") requires
+            denormalizing data or performing multiple client-side queries, which can get messy and expensive.</p>
+        <p><strong>Supabase (PostgreSQL):</strong> Is built directly on top of PostgreSQL, a wildly popular open-source
+            relational database. SQL provides immense power for querying complex, structured data with JOINs and foreign
+            keys. If your app requires heavy data analysis or complex relationships (like an E-commerce platform), a SQL
+            structure is often far superior.</p>
+
+        <h2>2. Real-time Capabilities</h2>
+        <p>Both platforms excel at pushing real-time updates to mobile clients.</p>
+        <p>Firebase was built for real-time from day one. Its WebSocket connections are extremely robust, and
+            subscribing to changes in a Firestore document is trivial in Flutter.</p>
+        <p>Supabase also provides real-time subscriptions out of the box using PostgreSQL's replication functionality.
+            While occasionally requiring a bit more initial configuration than Firebase, its Flutter SDK makes listening
+            to database changes very straightforward.</p>
+
+        <h2>3. Authentication & Storage</h2>
+        <p><strong>Auth:</strong> Firebase Authentication is a titan. It supports massive scale, handles dozens of OAuth
+            providers (Google, Apple, Facebook, Twitter, custom APIs), and provides phone number authentication
+            reliably. Supabase Auth is excellent, utilizing GoTrue under the hood, and covers all the standard
+            providers, though Firebase's ecosystem is slightly more mature, especially for edge cases.</p>
+        <p><strong>Storage:</strong> Both use AWS S3 under the hood for their storage solutions. Both offer robust
+            Flutter SDKs for uploading, downloading, and securing files via storage rules.</p>
+
+        <h2>4. Vendor Lock-in vs Open Source</h2>
+        <p>This is often the deciding factor for larger teams. Firebase is a proprietary Google product. If you ever
+            want to migrate away from Firestore, extracting your data and rewriting your cloud functions is a massive
+            undertaking. You are locked in.</p>
+        <p>Supabase proudly calls itself the "open-source Firebase alternative". Because it uses raw PostgreSQL, you are
+            simply learning SQL, a universally transferable skill. If Supabase ever shuts down or changes pricing
+            drastically, you can export your entire Postgres schema and migrate it to AWS RDS, Heroku, or any Postgres
+            hosting provider with comparatively little friction.</p>
+
+        <h2>Summary Comparison</h2>
+        <table>
+            <tr>
+                <th>Feature</th>
+                <th>Firebase</th>
+                <th>Supabase</th>
+            </tr>
+            <tr>
+                <td>Database</td>
+                <td>NoSQL (Firestore)</td>
+                <td>SQL (PostgreSQL)</td>
+            </tr>
+            <tr>
+                <td>Vendor Lock-in</td>
+                <td>High</td>
+                <td>Low (Open Source Postgres)</td>
+            </tr>
+            <tr>
+                <td>Query Complexity</td>
+                <td>Limited (Requires denormalization)</td>
+                <td>High (Full SQL JOINs)</td>
+            </tr>
+            <tr>
+                <td>Flutter Support</td>
+                <td>Exceptional (Official FlutterFire)</td>
+                <td>Excellent (Community driven, highly active)</td>
+            </tr>
+        </table>
+
+        <h2>Conclusion</h2>
+        <p>If you need a flexible schema, lightning-fast development time for a prototype, or are heavily integrated
+            into the Google Cloud ecosystem, <strong>Firebase</strong> remains an incredible tool. However, if your data
+            is highly structured, requires complex queries, or you strongly value open-source technologies and avoiding
+            vendor lock-in, <strong>Supabase</strong> is an extremely compelling choice for modern Flutter applications.
+        </p>
+
+        <div class="back-btn-container">
+            <a href="index.html#blog" class="btn btn-primary">
+                <i class="fas fa-arrow-left"></i> Back to All Blogs
+            </a>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer" style="margin-top: 60px;">
+        <div class="container">
+            <div class="footer-inner">
+                <div class="footer-logo">SURAJ</div>
+                <p class="footer-copy">© 2025 Suraj Sonkar. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>

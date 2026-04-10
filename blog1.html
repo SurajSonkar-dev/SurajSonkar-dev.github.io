@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Building High-Performance Flutter Apps | Suraj Sonkar</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg?v=8" />
+    <link rel="icon" type="image/png" href="favicon-96x96.png?v=8" sizes="96x96" />
+    <link rel="shortcut icon" href="favicon.ico?v=8" />
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=8" />
+    <meta name="theme-color" content="#0a0a0a" />
+    <link rel="manifest" href="site.webmanifest" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link rel="stylesheet" href="style.css" />
+    <style>
+        .blog-header {
+            padding: 120px 0 60px;
+            background: var(--bg-2);
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .blog-post-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 60px 24px;
+        }
+
+        .blog-post-content h2,
+        .blog-post-content h3 {
+            color: var(--yellow);
+            margin: 40px 0 20px;
+        }
+
+        .blog-post-content p {
+            margin-bottom: 24px;
+            font-size: 1.05rem;
+            color: var(--text);
+            line-height: 1.8;
+        }
+
+        .blog-post-content code {
+            background: var(--bg-card);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-family: var(--font-mono);
+            color: var(--yellow);
+            font-size: 0.9em;
+        }
+
+        .blog-post-content ul {
+            margin: 0 0 24px 24px;
+            color: var(--text);
+        }
+
+        .blog-post-content li {
+            margin-bottom: 12px;
+        }
+
+        .back-btn-container {
+            margin-top: 60px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">SURAJ</a>
+            <a href="index.html#blog" class="btn btn-outline" style="padding: 8px 20px; font-size: 0.85rem;">
+                <i class="fas fa-arrow-left"></i> Back to Portfolio
+            </a>
+        </div>
+    </nav>
+
+    <!-- HEADER -->
+    <header class="blog-header">
+        <div class="container">
+            <div class="section-tag">FLUTTER</div>
+            <h1 class="section-title">Building High-Performance Flutter Apps</h1>
+            <p class="section-sub">Tips and tricks for optimizing Flutter app performance for production.</p>
+            <div style="color: var(--text-muted); font-size: 0.9rem;">
+                <i class="fas fa-calendar-alt"></i> March 10, 2025 &nbsp; • &nbsp; <i class="fas fa-clock"></i> 4 min
+                read
+            </div>
+        </div>
+    </header>
+
+    <!-- CONTENT -->
+    <main class="blog-post-content">
+        <h2>Why Performance Matters in Mobile Apps</h2>
+        <p>In today's fast-paced digital world, users expect mobile applications to be lightning-fast, smooth, and
+            highly responsive. Even a slight delay or a dropped frame can lead to user frustration and ultimately, app
+            abandonment. As Flutter developers, we have a powerful toolkit at our disposal, but writing high-performance
+            apps still requires a deep understanding of how the framework operates under the hood.</p>
+
+        <h2>1. Optimize Your Build Methods</h2>
+        <p>The <code>build()</code> method in Flutter should be pure and free of side effects. It can be called
+            frequently (up to 60 times a second during animations), so keeping it lightweight is crucial.</p>
+        <ul>
+            <li><strong>Avoid heavy computation:</strong> Never perform expensive operations like parsing JSON, complex
+                mathematical calculations, or fetching data directly inside a <code>build()</code> method. Move these to
+                <code>initState()</code>, use FutureBuilders, or handle them in your state management layer.</li>
+            <li><strong>Use <code>const</code> constructors:</strong> Whenever you have a widget that doesn't change
+                based on state, instantiate it with the <code>const</code> keyword. This tells Flutter that the widget
+                can be cached and reused, saving valuable CPU cycles during the rebuild process.</li>
+        </ul>
+
+        <h2>2. Efficient List Rendering</h2>
+        <p>Rendering long lists is a common source of performance bottlenecks. If you try to render thousands of items
+            using a standard <code>ListView</code>, your app will likely stutter and consume excessive memory.</p>
+        <p>Always use <code>ListView.builder()</code> or <code>ListView.separated()</code> for dynamic or large lists.
+            These constructors render only the items that are currently visible on the screen, creating and destroying
+            widgets dynamically as the user scrolls. This technique is known as lazy loading and is essential for
+            maintaining a smooth 60fps scrolling experience.</p>
+
+        <h2>3. Manage State Wisely</h2>
+        <p>State management is not just about organizing code; it's heavily tied to performance. Triggering unnecessary
+            rebuilds is the number one cause of sluggish Flutter apps.</p>
+        <p>When using <code>setState()</code>, be granular. Don't call <code>setState()</code> at the root of a large
+            widget tree if only a small child needs to update. Extract the changing portion into a separate Stateful
+            widget, or use state management solutions like Provider, Riverpod, or BLoC to rebuild only the specific
+            components that rely on the changed data.</p>
+
+        <h2>4. Pre-cache Images</h2>
+        <p>Loading large images over the network or even from local assets can cause jank, especially when a new screen
+            is pushed. If you know an image will be needed soon, you can pre-cache it into memory.</p>
+        <p>Use the <code>precacheImage()</code> function provided by Flutter to load the image before it's actually
+            rendered by an <code>Image</code> widget. This ensures the image appears instantly without a placeholder
+            phase or layout shift.</p>
+
+        <h2>Conclusion</h2>
+        <p>Building high-performance Flutter apps is a continuous process of mindful coding and regular profiling. By
+            keeping your build methods clean, using lazy-loading for lists, managing state efficiently, and adopting
+            best practices for assets, you can deliver the buttery-smooth experiences that users expect from modern
+            applications.</p>
+
+        <div class="back-btn-container">
+            <a href="index.html#blog" class="btn btn-primary">
+                <i class="fas fa-arrow-left"></i> Back to All Blogs
+            </a>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer" style="margin-top: 60px;">
+        <div class="container">
+            <div class="footer-inner">
+                <div class="footer-logo">SURAJ</div>
+                <p class="footer-copy">© 2025 Suraj Sonkar. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>

@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Suraj Sonkar | Flutter & Android Developer</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg?v=8" />
+  <link rel="icon" type="image/png" href="favicon-96x96.png?v=8" sizes="96x96" />
+  <link rel="shortcut icon" href="favicon.ico?v=8" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=8" />
+  <meta name="theme-color" content="#0a0a0a" />
+  <link rel="manifest" href="site.webmanifest" />
+  <meta name="description"
+    content="Suraj Sonkar - Flutter Android Application Developer and Mobile Software Engineer. View my projects, skills, and get in touch." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <!-- ─────────────── NAVBAR ─────────────── -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="#home" class="nav-logo">SURAJ</a>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#home" class="nav-link active" data-section="home">Home</a></li>
+        <li><a href="#about" class="nav-link" data-section="about">About</a></li>
+        <li><a href="#resume" class="nav-link" data-section="resume">Resume</a></li>
+        <li><a href="#services" class="nav-link" data-section="services">Services</a></li>
+        <li><a href="#skills" class="nav-link" data-section="skills">Skills</a></li>
+        <li><a href="#projects" class="nav-link" data-section="projects">Projects</a></li>
+        <li><a href="#blog" class="nav-link" data-section="blog">Blog</a></li>
+        <li><a href="#contact" class="nav-link" data-section="contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ─────────────── HERO ─────────────── -->
+  <section class="hero" id="home">
+    <div class="hero-particles" id="particles"></div>
+    <div class="hero-container">
+      <div class="hero-text reveal-left">
+        <p class="hero-greeting">Hello! 👋</p>
+        <h1 class="hero-title">I'm <span class="highlight" id="nameTypingText"></span><span class="cursor"
+            style="color: var(--yellow);">|</span></h1>
+        <div class="hero-subtitle">
+          <span class="static-text">Flutter Android Application Developer</span>
+        </div>
+        <div class="typing-container">
+          <span class="typing-prefix">I'm also a </span>
+          <span class="typing-text" id="typingText"></span><span class="cursor">|</span>
+        </div>
+        <div class="hero-buttons">
+          <a href="#contact" class="btn btn-primary" id="hireMeBtn">
+            <i class="fas fa-paper-plane"></i> Hire Me
+          </a>
+          <a href="#projects" class="btn btn-outline" id="myWorksBtn">
+            <i class="fas fa-briefcase"></i> My Works
+          </a>
+        </div>
+        <div class="hero-stats">
+          <div class="stat">
+            <span class="stat-number" data-target="70">0</span><span class="stat-plus">+</span>
+            <span class="stat-label">Projects</span>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat">
+            <span class="stat-number" data-target="30">0</span><span class="stat-plus">+</span>
+            <span class="stat-label">Clients</span>
+          </div>
+        </div>
+      </div>
+      <div class="hero-image reveal-right">
+        <div class="image-glow"></div>
+        <div class="profile-ring">
+          <img src="profile.png" alt="Suraj Sonkar" class="profile-img" id="profileImg" />
+        </div>
+        <div class="floating-badge badge-flutter">
+          <i class="fas fa-mobile-alt"></i> Flutter
+        </div>
+        <div class="floating-badge badge-android">
+          <i class="fab fa-android"></i> Android
+        </div>
+        <div class="floating-badge badge-dart">
+          <span class="dart-icon">🎯</span> Dart
+        </div>
+      </div>
+    </div>
+    <div class="scroll-indicator">
+      <div class="scroll-dot"></div>
+    </div>
+  </section>
+
+  <!-- ─────────────── ABOUT ─────────────── -->
+  <section class="section about-section" id="about">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-image-wrap reveal-left">
+          <div class="about-img-container">
+            <img src="profile.png" alt="Suraj Sonkar About" class="about-img" />
+            <div class="about-img-overlay"></div>
+          </div>
+        </div>
+        <div class="about-content reveal-right">
+          <div class="section-tag">WHO AM I</div>
+          <h2 class="section-title">About <span class="highlight">Me</span></h2>
+          <p class="about-desc">
+            “<span id="aboutTypingText"></span><span class="cursor">|</span>”
+          </p>
+          <div class="info-grid">
+            <div class="info-item">
+              <span class="info-label"><i class="fas fa-user"></i> Name</span>
+              <span class="info-value">Suraj Sonkar</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label"><i class="fas fa-calendar-alt"></i> Date of Birth</span>
+              <span class="info-value">August 04, 1998</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label"><i class="fas fa-map-marker-alt"></i> Location</span>
+              <span class="info-value">India 🇮🇳</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label"><i class="fas fa-envelope"></i> Email</span>
+              <span class="info-value">info.surajsonkarg@gmail.com</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label"><i class="fas fa-phone"></i> Phone</span>
+              <span class="info-value">+91-9406289007</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label"><i class="fas fa-check-circle"></i> Projects</span>
+              <span class="info-value highlight">70+ Projects Completed</span>
+            </div>
+          </div>
+          <div class="about-buttons">
+            <a href="Suraj Sonkar Resume.pdf" download="Suraj_Sonkar_Resume.pdf" target="_blank" class="btn btn-primary"
+              id="downloadCVBtn">
+              <i class="fas fa-download"></i> Download CV
+            </a>
+            <a href="certificate.pdf" download="WsCube_Certificate.pdf" target="_blank" class="btn btn-outline"
+              id="viewCertBtn">
+              <i class="fas fa-award"></i> Certificate
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────────── RESUME ─────────────── -->
+  <section class="section resume-section" id="resume">
+    <div class="container">
+      <div class="section-tag center">MY JOURNEY</div>
+      <h2 class="section-title center">My <span class="highlight">Resume</span></h2>
+      <div class="resume-grid" style="grid-template-columns: 1fr; max-width: 600px; margin: 0 auto;">
+        <div class="resume-col reveal-up">
+          <h3 class="resume-col-title"><i class="fas fa-graduation-cap"></i> Education</h3>
+          <div class="timeline">
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-content">
+                <span class="timeline-date">2021 – 2023</span>
+                <h4>BCA – Bachelor of Computer Applications</h4>
+                <p>ISBM University, Chhattisgarh</p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-content">
+                <span class="timeline-date">2016 – 2017</span>
+                <h4>Higher Secondary (12th)</h4>
+                <p>Higher Secondary School, India</p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-content">
+                <span class="timeline-date">Completed</span>
+                <h4>Certificate Course – Flutter &amp; Android Application Developer</h4>
+                <p>WsCube Tech</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────────── SERVICES ─────────────── -->
+  <section class="section services-section" id="services">
+    <div class="container">
+      <div class="section-tag center">WHAT I DO</div>
+      <h2 class="section-title center">My <span class="highlight">Services</span></h2>
+      <div class="services-grid">
+        <div class="service-card reveal-up">
+          <div class="service-icon"><i class="fas fa-mobile-alt"></i></div>
+          <h3>Flutter App Development</h3>
+          <p>Cross-platform apps for Android & iOS with a single codebase, pixel-perfect UI and native performance.</p>
+        </div>
+        <div class="service-card reveal-up" style="animation-delay:.1s">
+          <div class="service-icon"><i class="fab fa-android"></i></div>
+          <h3>Android Development</h3>
+          <p>Native Android applications using Kotlin/Java with modern architecture patterns and Material Design.</p>
+        </div>
+        <div class="service-card reveal-up" style="animation-delay:.2s">
+          <div class="service-icon"><i class="fas fa-fire"></i></div>
+          <h3>Firebase Integration</h3>
+          <p>Seamless backend solutions with Firebase Auth, Firestore, Cloud Functions, and Push Notifications.</p>
+        </div>
+        <div class="service-card reveal-up" style="animation-delay:.3s">
+          <div class="service-icon"><i class="fas fa-palette"></i></div>
+          <h3>UI/UX Design</h3>
+          <p>Beautiful and intuitive app interfaces crafted with attention to detail, animations, and user flow.</p>
+        </div>
+        <div class="service-card reveal-up" style="animation-delay:.4s">
+          <div class="service-icon"><i class="fas fa-plug"></i></div>
+          <h3>API Integration</h3>
+          <p>REST and GraphQL API integration, state management (Riverpod, BLoC, Provider) and clean architecture.</p>
+        </div>
+        <div class="service-card reveal-up" style="animation-delay:.5s">
+          <div class="service-icon"><i class="fas fa-tools"></i></div>
+          <h3>App Maintenance</h3>
+          <p>Bug fixing, performance optimization, updates, and ongoing support for existing mobile applications.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────────── SKILLS ─────────────── -->
+  <section class="section skills-section" id="skills">
+    <div class="container">
+      <div class="section-tag center">MY EXPERTISE</div>
+      <h2 class="section-title center">My <span class="highlight">Skills</span></h2>
+      <p class="section-sub center">Technologies and tools I work with every day to build amazing mobile experiences.
+      </p>
+      <div class="skills-watermark">SKILLS</div>
+      <div class="skills-grid">
+        <div class="skill-item reveal-left">
+          <div class="skill-info">
+            <span class="skill-name"><i class="fas fa-mobile-alt"></i> Flutter</span>
+            <span class="skill-pct">95%</span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill" data-width="95"></div>
+          </div>
+        </div>
+        <div class="skill-item reveal-right">
+          <div class="skill-info">
+            <span class="skill-name">🎯 Dart</span>
+            <span class="skill-pct">90%</span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill" data-width="90"></div>
+          </div>
+        </div>
+        <div class="skill-item reveal-left">
+          <div class="skill-info">
+            <span class="skill-name"><i class="fas fa-fire"></i> Firebase</span>
+            <span class="skill-pct">85%</span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill" data-width="85"></div>
+          </div>
+        </div>
+        <div class="skill-item reveal-right">
+          <div class="skill-info">
+            <span class="skill-name"><i class="fab fa-android"></i> Android Development</span>
+            <span class="skill-pct">90%</span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill" data-width="90"></div>
+          </div>
+        </div>
+        <div class="skill-item reveal-left">
+          <div class="skill-info">
+            <span class="skill-name"><i class="fas fa-palette"></i> UI/UX Design</span>
+            <span class="skill-pct">80%</span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill" data-width="80"></div>
+          </div>
+        </div>
+        <div class="skill-item reveal-right">
+          <div class="skill-info">
+            <span class="skill-name"><i class="fas fa-plug"></i> API Integration</span>
+            <span class="skill-pct">85%</span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill" data-width="85"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────────── PROJECTS ─────────────── -->
+  <section class="section projects-section" id="projects">
+    <div class="container">
+      <div class="section-tag center">MY WORK</div>
+      <h2 class="section-title center">Featured <span class="highlight">Projects</span></h2>
+      <div class="filter-tabs">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="flutter">Flutter</button>
+        <button class="filter-btn" data-filter="android">Android</button>
+        <button class="filter-btn" data-filter="firebase">Firebase</button>
+      </div>
+      <div class="projects-grid">
+        <div class="project-card reveal-up" data-category="flutter firebase">
+          <div class="project-img-wrap">
+            <img src="project1.png" alt="E-Commerce App" class="project-img">
+            <div class="project-overlay">
+              <a href="#" class="project-link"><i class="fas fa-eye"></i></a>
+              <a href="#" class="project-link"><i class="fab fa-github"></i></a>
+            </div>
+          </div>
+          <div class="project-info">
+            <div class="project-tags"><span class="tag">Flutter</span><span class="tag">Firebase</span></div>
+            <h3>E-Commerce App</h3>
+            <p>Full-featured shopping app with cart, payments, and real-time order tracking.</p>
+          </div>
+        </div>
+        <div class="project-card reveal-up" data-category="flutter" style="animation-delay:.1s">
+          <div class="project-img-wrap">
+            <img src="project2.png" alt="Chat Application" class="project-img">
+            <div class="project-overlay">
+              <a href="#" class="project-link"><i class="fas fa-eye"></i></a>
+              <a href="#" class="project-link"><i class="fab fa-github"></i></a>
+            </div>
+          </div>
+          <div class="project-info">
+            <div class="project-tags"><span class="tag">Flutter</span><span class="tag">WebSocket</span></div>
+            <h3>Chat Application</h3>
+            <p>Real-time messaging app with media sharing, voice notes, and group chats.</p>
+          </div>
+        </div>
+        <div class="project-card reveal-up" data-category="android firebase" style="animation-delay:.2s">
+          <div class="project-img-wrap">
+            <img src="project3.png" alt="Fitness Tracker" class="project-img">
+            <div class="project-overlay">
+              <a href="#" class="project-link"><i class="fas fa-eye"></i></a>
+              <a href="#" class="project-link"><i class="fab fa-github"></i></a>
+            </div>
+          </div>
+          <div class="project-info">
+            <div class="project-tags"><span class="tag">Android</span><span class="tag">ML Kit</span></div>
+            <h3>Fitness Tracker</h3>
+            <p>AI-powered fitness app with workout plans, health metrics, and progress analytics.</p>
+          </div>
+        </div>
+        <div class="project-card reveal-up" data-category="flutter firebase" style="animation-delay:.3s">
+          <div class="project-img-wrap">
+            <img src="project4.png" alt="Food Delivery App" class="project-img">
+            <div class="project-overlay">
+              <a href="#" class="project-link"><i class="fas fa-eye"></i></a>
+              <a href="#" class="project-link"><i class="fab fa-github"></i></a>
+            </div>
+          </div>
+          <div class="project-info">
+            <div class="project-tags"><span class="tag">Flutter</span><span class="tag">Maps API</span></div>
+            <h3>Food Delivery App</h3>
+            <p>Location-based food delivery with live tracking and integrated payment gateway.</p>
+          </div>
+        </div>
+        <div class="project-card reveal-up" data-category="android" style="animation-delay:.4s">
+          <div class="project-img-wrap">
+            <img src="project5.png" alt="News Reader App" class="project-img">
+            <div class="project-overlay">
+              <a href="#" class="project-link"><i class="fas fa-eye"></i></a>
+              <a href="#" class="project-link"><i class="fab fa-github"></i></a>
+            </div>
+          </div>
+          <div class="project-info">
+            <div class="project-tags"><span class="tag">Android</span><span class="tag">REST API</span></div>
+            <h3>News Reader App</h3>
+            <p>News aggregator with offline reading, bookmarks, and category filtering.</p>
+          </div>
+        </div>
+        <div class="project-card reveal-up" data-category="flutter" style="animation-delay:.5s">
+          <div class="project-img-wrap">
+            <img src="project6.jpg" alt="Finance Manager" class="project-img">
+            <div class="project-overlay">
+              <a href="#" class="project-link"><i class="fas fa-eye"></i></a>
+              <a href="#" class="project-link"><i class="fab fa-github"></i></a>
+            </div>
+          </div>
+          <div class="project-info">
+            <div class="project-tags"><span class="tag">Flutter</span><span class="tag">Charts</span></div>
+            <h3>Finance Manager</h3>
+            <p>Personal finance tracker with budget planning, expense charts, and goals.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────────── BLOG ─────────────── -->
+  <section class="section blog-section" id="blog">
+    <div class="container">
+      <div class="section-tag center">MY THOUGHTS</div>
+      <h2 class="section-title center">Latest <span class="highlight">Blog</span></h2>
+      <div class="blog-grid">
+        <div class="blog-card reveal-up">
+          <div class="blog-img-wrap">
+            <div class="blog-placeholder blog-1"><i class="fas fa-bolt"></i></div>
+            <div class="blog-date-badge">Mar 2025</div>
+          </div>
+          <div class="blog-content">
+            <div class="blog-tags"><span class="tag">Flutter</span></div>
+            <h3>Building High-Performance Flutter Apps</h3>
+            <p>Tips and tricks for optimizing Flutter app performance for production.</p>
+            <a href="blog1.html" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+          </div>
+        </div>
+        <div class="blog-card reveal-up" style="animation-delay:.1s">
+          <div class="blog-img-wrap">
+            <div class="blog-placeholder blog-2"><i class="fas fa-layer-group"></i></div>
+            <div class="blog-date-badge">Feb 2025</div>
+          </div>
+          <div class="blog-content">
+            <div class="blog-tags"><span class="tag">Architecture</span></div>
+            <h3>Clean Architecture in Flutter with BLoC</h3>
+            <p>A comprehensive guide to structuring large-scale Flutter applications.</p>
+            <a href="blog2.html" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+          </div>
+        </div>
+        <div class="blog-card reveal-up" style="animation-delay:.2s">
+          <div class="blog-img-wrap">
+            <div class="blog-placeholder blog-3"><i class="fas fa-fire"></i></div>
+            <div class="blog-date-badge">Jan 2025</div>
+          </div>
+          <div class="blog-content">
+            <div class="blog-tags"><span class="tag">Firebase</span></div>
+            <h3>Firebase vs Supabase for Flutter Apps</h3>
+            <p>A detailed comparison to help you choose the right backend for your app.</p>
+            <a href="blog3.html" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────────── CONTACT ─────────────── -->
+  <section class="section contact-section" id="contact">
+    <div class="container">
+      <div class="section-tag center">GET IN TOUCH</div>
+      <h2 class="section-title center">Contact <span class="highlight">Me</span></h2>
+      <div class="contact-grid">
+        <div class="contact-info reveal-left">
+          <h3>Let's Work Together</h3>
+          <p>Have a project in mind? I'd love to hear about it. Let's create something amazing together.</p>
+          <div class="contact-cards">
+            <div class="contact-card">
+              <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+              <div>
+                <span class="contact-card-label">Email</span>
+                <span class="contact-card-value">info.surajsonkarg@gmail.com</span>
+              </div>
+            </div>
+            <div class="contact-card">
+              <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+              <div>
+                <span class="contact-card-label">Location</span>
+                <span class="contact-card-value">India 🇮🇳</span>
+              </div>
+            </div>
+            <div class="contact-card">
+              <div class="contact-icon"><i class="fas fa-phone"></i></div>
+              <div>
+                <span class="contact-card-label">Phone</span>
+                <span class="contact-card-value">+91-9406289007</span>
+              </div>
+            </div>
+          </div>
+          <div class="social-links">
+            <a href="https://github.com/SurajSonkar-dev" target="_blank" class="social-link" aria-label="GitHub"><i
+                class="fab fa-github"></i></a>
+            <a href="https://www.linkedin.com/in/SurajSonkar-dev/" target="_blank" class="social-link"
+              aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+            <a href="https://x.com/SSonkar73082" target="_blank" class="social-link" aria-label="Twitter"><i
+                class="fab fa-twitter"></i></a>
+            <a href="https://www.instagram.com/sooraj1998121?igsh=eTJjcGNqYm52NTNK" target="_blank" class="social-link"
+              aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="https://wa.me/919406289007" target="_blank" class="social-link" aria-label="WhatsApp"><i
+                class="fab fa-whatsapp"></i></a>
+            <a href="https://www.youtube.com/@codeingwala" target="_blank" class="social-link" aria-label="YouTube"><i
+                class="fab fa-youtube" style="color: #ff0000;"></i></a>
+          </div>
+
+        </div>
+        <div class="contact-form-wrap reveal-right">
+          <form class="contact-form" action="https://api.web3forms.com/submit" method="POST" id="contactForm" enctype="multipart/form-data">
+            <!-- Web3Forms Access Key for info.surajsonkarg@gmail.com -->
+            <!-- The real Access Key provided by the User -->
+            <input type="hidden" name="access_key" value="18a5403a-5efb-4e5d-8fb8-48da0645f3cf">
+            
+            <input type="hidden" name="subject" value="New message from Suraj Sonkar Portfolio!">
+            <input type="hidden" name="from_name" value="Portfolio Notification">
+            
+            <!-- Optional: Redirect to a custom success page, or let Web3Forms handle it -->
+            <!-- <input type="hidden" name="redirect" value="https://web3forms.com/success"> -->
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="name">Your Name</label>
+                <input type="text" id="name" name="name" placeholder="John Doe" required />
+              </div>
+              <div class="form-group">
+                <label for="email">Your Email</label>
+                <input type="email" id="email" name="email" placeholder="john@example.com" required />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="subject">Subject</label>
+              <input type="text" id="subject" name="custom_subject" placeholder="Project Inquiry" required />
+            </div>
+            <div class="form-group">
+              <label for="message">Message</label>
+              <div class="message-input-wrapper">
+                <textarea id="message" name="message" rows="5" placeholder="Tell me about your project..." required></textarea>
+                <div class="attachment-controls">
+                  <button type="button" id="attachmentBtn" class="attachment-btn" title="Add Image or Video">
+                    <i class="fas fa-paperclip"></i>
+                  </button>
+                  <input type="file" id="fileInput" name="attachment" accept="image/*,video/*,.pdf" multiple style="display: none;">
+                </div>
+              </div>
+              <div id="filePreviewContainer" class="file-preview-container"></div>
+            </div>
+            <button type="submit" class="btn btn-primary full-width" id="sendMsgBtn">
+              <i class="fas fa-paper-plane"></i> Send Message
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────────── FOOTER ─────────────── -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-logo">SURAJ</div>
+        <p class="footer-copy">© 2025 Suraj Sonkar. All rights reserved.</p>
+        <div class="footer-social">
+          <a href="https://github.com/SurajSonkar-dev" target="_blank" aria-label="GitHub"><i
+              class="fab fa-github"></i></a>
+          <a href="https://www.linkedin.com/in/SurajSonkar-dev/" target="_blank" aria-label="LinkedIn"><i
+              class="fab fa-linkedin-in"></i></a>
+          <a href="https://x.com/SSonkar73082" target="_blank" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+          <a href="https://www.youtube.com/@codeingwala" target="_blank" aria-label="YouTube"><i class="fab fa-youtube"
+              style="color: #ff0000;"></i></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Back to top -->
+  <button class="back-to-top" id="backToTop" aria-label="Back to top">
+    <i class="fas fa-chevron-up"></i>
+  </button>
+
+  <!-- tsParticles -->
+  <script src="https://cdn.jsdelivr.net/npm/tsparticles-engine@2.12.0/tsparticles.engine.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/tsparticles-slim@2.12.0/tsparticles.slim.min.js"></script>
+
+
+
+  <script src="script.js"></script>
+
+  <!-- Audio for Navigation Sound -->
+  <audio id="navSound" src="Door-OpenSite.mp3.mp3" preload="auto"></audio>
+</body>
+
+</html>
